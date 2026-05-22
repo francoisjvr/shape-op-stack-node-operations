@@ -139,39 +139,63 @@ Key runtime choices:
 
 ## Observed head movement
 
-Repeated samples showed:
+Initial repeated samples showed:
 - parallel op-reth execution head: `28556991`
 - later parallel op-reth execution head: `28556991`
 - live geth head at same point: `28860947`
 - public Shape head at same point: `28860996`
 
-Current observed execution lag:
+Initial observed execution lag:
 - versus live geth: `303956` blocks
 - versus public Shape RPC: `304005` blocks
 
-So the parallel execution head was **flat** during this observation window.
+So the parallel execution head looked **flat** during that first observation window.
+
+Follow-up samples about 14.5 minutes later showed the engine had in fact started moving again:
+- earlier execution head: `28556991`
+- later execution head: `28561052`
+- gain over that window: `4061` blocks
+- observed rate over that window: about `279.75` blocks/minute
+- later live/public head reference: `28860925`
+- later observed lag: `299873` blocks
+- rough lag-clear ETA at that observed rate: about `17.9` hours
+
+This means the initial flat period was real, but it was not permanent.
 
 ## Observed `eth_syncing`
 
-`op-reth` returned a syncing object, but it was not advancing during the sample window:
+During the initial flat period, `op-reth` returned a syncing object that was not advancing:
 - `startingBlock = currentBlock = highestBlock = 28556991`
 - stage `MerkleChangeSets` lagged behind at `26319946`
 - other stages reported `28556991`
 
-This means the node is alive and serving RPC, but the execution head did not actually move yet.
+Later, after the engine resumed forward motion:
+- `eth_syncing` returned `false`
+- execution head still continued moving upward
+
+Important nuance:
+- JSON-RPC `eth_syncing=false` did **not** mean the whole Shape stack was caught up
+- `op-node` still treated the execution layer as not ready for the newest unsafe payload range
 
 ## Observed `optimism_syncStatus`
 
 Early sample:
 - most L2 fields were still zeroed while the node was just coming up
 
-Later sample:
+During the first flat period:
 - `unsafe_l2.number = 28556991`
 - `safe_l2.number = 28556085`
 - `current_l1.number` advanced from `25101207` to `25101316`
 - `head_l1.number` was around `25151922`
 
-So `op-node` is doing derivation work and advancing L1 origin tracking, but that has **not** translated into execution head movement yet.
+Later, after forward motion resumed:
+- `unsafe_l2.number = 28561052`
+- `safe_l2.number = 28561052`
+- `finalized_l2.number = 28560432`
+- `current_l1.number = 25102120`
+- `head_l1.number = 25151984`
+
+So `op-node` is doing derivation work and L2 state is advancing, but the stack is still far behind current tip.
 
 ## Logs worth keeping
 
@@ -191,13 +215,14 @@ Repeated pattern from op-node:
 
 ## Outcome classification
 
-- **alive but not converging yet**
+- **alive and converging slowly, but still far behind**
 
 More specifically:
 - this is **not** a clean startup/config crash anymore
 - this is **not** healthy yet
-- this is **not** enough to claim success
-- the main blocker is still flat execution head while op-node tries to feed missing unsafe payloads
+- this is **not** ready for cutover
+- the engine did eventually resume advancing after an initially misleading flat period
+- `op-node` is still repeatedly trying to feed a much newer unsafe range than the current execution head can accept
 
 ## Current running state
 
@@ -208,6 +233,6 @@ As of this note:
 
 ## Next decision
 
-- continue investigating why the engine stays in syncing state at `28556991`
-- focus on why `op-reth` serves the snapshot but does not advance execution while op-node requests the missing unsafe range
-- avoid calling this healthy until execution head moves in decimal over repeated samples
+- continue observing whether the current convergence rate is stable or only bursty
+- focus on whether `op-node` unsafe-payload errors naturally disappear as the engine closes the gap
+- avoid calling this healthy until execution head keeps advancing in decimal and the lag drops materially over repeated samples

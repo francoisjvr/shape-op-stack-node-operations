@@ -33,6 +33,7 @@ Reference:
 - `references/shape-mainnet-reth-reality-notes.md`
 - `references/clean-preupload-baseline.md`
 - `references/runtime-datadir-promotion.md`
+- `references/first-parallel-runtime-attempt.md`
 
 ## When to Use
 
@@ -105,6 +106,18 @@ Full bring-up variant:
 - chain-spec/fork mismatch symptoms
 - pressure to discard geth before Reth proves itself
 - startup failures from forgotten port collisions with the live geth stack, especially default P2P port `30303`
+- `eth_syncing=false` on op-reth while op-node still rejects newest unsafe payload insertion
+- `op-node` repeatedly requesting a large missing unsafe range while `op-reth` stays at a flat execution head and reports it is still syncing
+
+## First parallel bring-up pitfalls
+
+When bringing up `op-reth` beside a live geth rollback stack:
+
+1. Do not trust built-in `op-reth --chain shape` blindly. Verify it first with `dump-genesis --chain shape` or equivalent and compare the exposed fork times against the currently working Shape runtime.
+2. If built-in chain support lags the live fork set, create explicit runtime chain files from the uploaded `genesis-l2.json` and `rollup.json`, then align them to the currently working live overrides before first startup.
+3. Do not combine `--disable-discovery` with `--disable-dns-discovery` on `op-reth`; current images reject that flag pair.
+4. If the live geth stack is still running on host networking, move parallel `op-reth` off default P2P port `30303` before treating the startup as a deeper failure.
+5. Classify the first attempt honestly: if `op-reth` serves RPC and `op-node` derives, but the execution head stays flat over repeated decimal block-number samples, call it stalled or only weakly converging, not healthy.
 
 ## Interpretation rule for peer count
 
