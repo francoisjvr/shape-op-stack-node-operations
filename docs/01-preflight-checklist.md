@@ -15,6 +15,7 @@ Run this before changing anything on the VPS.
 - [ ] Check Docker usage
 - [ ] Decide where extracted Reth data will live
 - [ ] Verify enough room for both staging and runtime if needed
+- [ ] If free space is lower than uploaded datadir size, prefer move/rename into canonical runtime path instead of full copy
 
 ## Current live state
 
@@ -33,8 +34,11 @@ Run this before changing anything on the VPS.
   - `/root/shape-mainnet-op-node-reth-data`
   - `/root/.shape-mainnet-op-reth-config`
 - [ ] Decide whether using uploaded unpacked data or other source
+- [ ] If uploaded unpacked data is validated and disk is tight, decide whether to rename staging into runtime path
 - [ ] Verify archive integrity if any archive is involved
 - [ ] Verify extracted data looks complete before startup
+- [ ] Copy uploaded chain/config artifacts into `/root/.shape-mainnet-op-reth-config` for explicit reuse and comparison
+- [ ] Remove stale source lock files before first local startup attempt
 - [ ] Avoid blind redownload if file already matches expected size and checksum/integrity tests pass
 
 ## Shape-specific config

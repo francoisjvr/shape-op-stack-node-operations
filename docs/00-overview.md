@@ -33,10 +33,11 @@ Shape mainnet has a few operational properties that punish lazy assumptions:
 ## Most important starting facts
 
 - current fallback geth datadir: `/root/Upload`
-- prepared Reth upload staging dir: `/root/shape-mainnet-op-reth-upload`
-- clean Reth runtime dir: `/root/shape-mainnet-op-reth-data`
+- current Reth upload staging dir: `/root/shape-mainnet-op-reth-upload`
+- current Reth runtime dir: `/root/shape-mainnet-op-reth-data`
 - clean Reth op-node dir: `/root/shape-mainnet-op-node-reth-data`
 - clean Reth config dir: `/root/.shape-mainnet-op-reth-config`
+- current runtime datadir is the validated uploaded dataset moved into `/root/shape-mainnet-op-reth-data`
 - user preference: try Reth first for future Shape experiments
 - user wants Reth status reported directly, not legacy geth chatter, unless asked
 
@@ -47,5 +48,9 @@ Do not resurrect old `reth-fresh` experiment paths.
 The current prep baseline is:
 - old Reth-only experiment dirs removed
 - clean canonical Reth dirs recreated
+- uploaded Reth datadir validated and renamed into canonical runtime path instead of copied
+- upload staging path recreated empty for future use
+- uploaded config artifacts copied into `/root/.shape-mainnet-op-reth-config`
+- stale source lock files removed before first startup attempt
 - no Reth services started yet
 - current geth fallback left untouched

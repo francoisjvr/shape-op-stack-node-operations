@@ -51,7 +51,9 @@ Do not use it when:
 2. Do not treat `unsafe_l2` movement as success.
 3. Report Shape block numbers in decimal.
 4. Treat Shape mainnet specifics as first-class constraints.
-5. Prefer `op-reth` over generic `reth` unless there is a deliberate reason otherwise.
+5. Keep repo docs / skill notes synchronized with what was actually observed.
+6. When a fresh uploaded datadir arrives, validate it structurally before any bring-up and prefer in-place use over a full copy when disk is tight.
+7. If the uploaded datadir becomes the runtime datadir, record that rename/move decision in repo docs immediately and snapshot the uploaded config files separately.
 
 ## Shape-specific realities
 
@@ -112,6 +114,22 @@ Instead ask:
 - can `op-node` drive it correctly over Engine API
 - does execution head actually move
 - does lag against public Shape RPC improve
+
+## Prep-only upload validation
+
+When the user says the Reth data upload is finished and wants a look without starting services:
+
+1. Verify the uploaded datadir is structurally real, not a placeholder. Expect at minimum `db/`, `static_files/`, `blobstore/`, `invalid_block_hooks/`, `reth.toml`, `rollup.json`, and `genesis-l2.json`.
+2. Confirm `db/mdbx.dat` exists with substantial size and that header / receipt / transaction static files all exist in comparable counts.
+3. Compare the highest static-file range against a live Shape height sample and the preserved geth comparator. Use decimal block numbers in the report.
+4. Inspect `rollup.json` for Shape-specific upgrade times like holocene / isthmus so the dataset is not obviously using the wrong chain config.
+5. Treat lock files such as `db/lock`, `db/mdbx.lck`, or `static_files/lock` as review / cleanup items before first startup, not automatic proof of corruption.
+6. If free disk is lower than the uploaded datadir size, do not copy the upload into a second runtime datadir. Prefer either using the uploaded path directly or moving it into the canonical runtime path.
+7. Keep the existing geth stack intact as rollback/control sample unless the user explicitly chooses otherwise.
+8. Before first local startup, snapshot uploaded `reth.toml` / `rollup.json` / `genesis-l2.json` into the canonical config dir and remove stale source lock files if no Reth process is running.
+
+Reference: `references/uploaded-datadir-validation.md`
+
 
 ## Role of the current geth node
 

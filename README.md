@@ -44,7 +44,7 @@ Until Reth proves healthy:
 
 ## Current prepared base state
 
-The VPS has been reset to a clean pre-upload Reth baseline without starting any Reth services.
+The VPS has now moved from clean pre-upload baseline to **post-upload prep state** without starting any Reth services.
 
 Canonical paths now are:
 - upload staging: `/root/shape-mainnet-op-reth-upload`
@@ -52,7 +52,14 @@ Canonical paths now are:
 - Reth op-node data: `/root/shape-mainnet-op-node-reth-data`
 - Reth config: `/root/.shape-mainnet-op-reth-config`
 
-Old experimental `reth-fresh` paths were removed so the next upload starts from a known clean base.
+Current observed state:
+- the uploaded Reth datadir was structurally validated
+- because root free space was only about `59G`, the uploaded datadir was **moved** into `/root/shape-mainnet-op-reth-data` instead of copied
+- `/root/shape-mainnet-op-reth-upload` was recreated as an empty future staging path
+- uploaded `reth.toml`, `rollup.json`, `genesis-l2.json`, and `known-peers.json` were copied into `/root/.shape-mainnet-op-reth-config`
+- stale source lock files were removed before any first local startup attempt
+
+Old experimental `reth-fresh` paths were removed first so the upload landed on a known clean base instead of ambiguous leftovers.
 
 ## Key Shape-specific lessons already known
 
