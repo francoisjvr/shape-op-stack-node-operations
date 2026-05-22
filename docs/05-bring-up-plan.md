@@ -17,6 +17,14 @@ Use dedicated paths for:
 - runtime data
 - config
 
+Current canonical base paths are:
+- `/root/shape-mainnet-op-reth-upload`
+- `/root/shape-mainnet-op-reth-data`
+- `/root/shape-mainnet-op-node-reth-data`
+- `/root/.shape-mainnet-op-reth-config`
+
+Do not revive old `reth-fresh` paths just because they existed before.
+
 ## 3. Validate source data
 
 Before blaming the runtime later:

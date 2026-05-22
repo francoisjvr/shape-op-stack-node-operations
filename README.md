@@ -30,6 +30,7 @@ This repo covers:
 - [Failure patterns](docs/07-failure-patterns.md)
 - [Cutover and rollback](docs/08-cutover-and-rollback.md)
 - [Known unknowns](docs/09-known-unknowns.md)
+- [Current prep state](docs/10-current-prep-state.md)
 - [Skill](skills/shape-network-mainnet-op-reth-journey/SKILL.md)
 
 ## Core safety rule
@@ -40,6 +41,18 @@ Until Reth proves healthy:
 - preserve `/root/Upload`
 - preserve geth rollback capability
 - keep Reth paths and ports isolated
+
+## Current prepared base state
+
+The VPS has been reset to a clean pre-upload Reth baseline without starting any Reth services.
+
+Canonical paths now are:
+- upload staging: `/root/shape-mainnet-op-reth-upload`
+- Reth runtime data: `/root/shape-mainnet-op-reth-data`
+- Reth op-node data: `/root/shape-mainnet-op-node-reth-data`
+- Reth config: `/root/.shape-mainnet-op-reth-config`
+
+Old experimental `reth-fresh` paths were removed so the next upload starts from a known clean base.
 
 ## Key Shape-specific lessons already known
 

@@ -24,6 +24,14 @@ Use it when the job is no longer “fix the current geth stack” and has become
 
 This is explicitly Shape-specific.
 
+Documentation/reporting standard for this class of task:
+- err toward more operator detail, not less
+- record staged expectations, rollback constraints, and concrete failure classification
+- interpret zero EL peers as expected current topology unless Shape changes the network model
+
+Reference:
+- `references/shape-mainnet-reth-reality-notes.md`
+
 ## When to Use
 
 Use it when:
@@ -51,6 +59,16 @@ Do not use it when:
 - zero EL peers is not the main success metric.
 - current Shape mainnet EL peering is intentionally not enabled, sequencing is centralized, and there are no EL bootnodes yet.
 - chain-spec handling may matter more than operators expect.
+
+## Canonical clean-base paths
+
+For the next Reth bring-up track, prefer these canonical paths:
+- upload staging: `/root/shape-mainnet-op-reth-upload`
+- runtime Reth data: `/root/shape-mainnet-op-reth-data`
+- runtime Reth op-node data: `/root/shape-mainnet-op-node-reth-data`
+- Reth config: `/root/.shape-mainnet-op-reth-config`
+
+Avoid reviving old `reth-fresh` experiment paths when preparing a clean retry.
 
 ## Fast workflow
 

@@ -26,6 +26,12 @@ Run this before changing anything on the VPS.
 
 ## Reth artifacts
 
+- [ ] Confirm stale `reth-fresh` experiment dirs are gone
+- [ ] Confirm clean canonical Reth dirs exist:
+  - `/root/shape-mainnet-op-reth-upload`
+  - `/root/shape-mainnet-op-reth-data`
+  - `/root/shape-mainnet-op-node-reth-data`
+  - `/root/.shape-mainnet-op-reth-config`
 - [ ] Decide whether using uploaded unpacked data or other source
 - [ ] Verify archive integrity if any archive is involved
 - [ ] Verify extracted data looks complete before startup

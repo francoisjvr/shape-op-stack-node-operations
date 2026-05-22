@@ -23,13 +23,17 @@ Use distinct paths for:
 
 ## Directory planning
 
-Known staging path already prepared:
-- `/root/shape-mainnet-op-reth-upload`
+Canonical clean-base layout:
+- upload staging: `/root/shape-mainnet-op-reth-upload`
+- runtime Reth data: `/root/shape-mainnet-op-reth-data`
+- runtime Reth op-node data: `/root/shape-mainnet-op-node-reth-data`
+- Reth config: `/root/.shape-mainnet-op-reth-config`
 
-Suggested separation model:
-- uploaded unpacked Reth source data in staging path
-- runtime Reth data path separate from geth data path
-- explicit config directory for Reth-specific files
+Rules:
+- do not reuse old `reth-fresh` naming from previous experiments
+- keep uploaded source data separate from runtime datadirs unless there is a deliberate reason to run in place
+- keep Reth runtime data separate from geth rollback data
+- put chain-spec and rollup artifacts in the dedicated Reth config dir once finalized
 
 ## Port planning
 
