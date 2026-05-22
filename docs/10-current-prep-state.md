@@ -98,3 +98,5 @@ Before first Reth startup:
 - define the exact `op-reth` and `op-node` launch recipe against `/root/shape-mainnet-op-reth-data`
 - compare first runtime execution head samples against current geth and public Shape RPC
 - only then begin the actual Reth bring-up sequence
+
+That first runtime attempt has now been executed and is recorded in `docs/11-first-runtime-attempt.md`.

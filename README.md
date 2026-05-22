@@ -31,6 +31,7 @@ This repo covers:
 - [Cutover and rollback](docs/08-cutover-and-rollback.md)
 - [Known unknowns](docs/09-known-unknowns.md)
 - [Current prep state](docs/10-current-prep-state.md)
+- [First runtime attempt](docs/11-first-runtime-attempt.md)
 - [Skill](skills/shape-network-mainnet-op-reth-journey/SKILL.md)
 
 ## Core safety rule
@@ -58,6 +59,7 @@ Current observed state:
 - `/root/shape-mainnet-op-reth-upload` was recreated as an empty future staging path
 - uploaded `reth.toml`, `rollup.json`, `genesis-l2.json`, and `known-peers.json` were copied into `/root/.shape-mainnet-op-reth-config`
 - stale source lock files were removed before any first local startup attempt
+- first parallel runtime attempt now exists and is recorded in `docs/11-first-runtime-attempt.md`
 
 Old experimental `reth-fresh` paths were removed first so the upload landed on a known clean base instead of ambiguous leftovers.
 

@@ -32,6 +32,7 @@ Documentation/reporting standard for this class of task:
 Reference:
 - `references/shape-mainnet-reth-reality-notes.md`
 - `references/clean-preupload-baseline.md`
+- `references/runtime-datadir-promotion.md`
 
 ## When to Use
 
@@ -62,6 +63,7 @@ Do not use it when:
 - zero EL peers is not the main success metric.
 - current Shape mainnet EL peering is intentionally not enabled, sequencing is centralized, and there are no EL bootnodes yet.
 - chain-spec handling may matter more than operators expect.
+- current `op-reth` built-in `shape` chain support may lag the live Shape fork set; verify `dump-genesis --chain shape` before trusting it.
 
 ## Canonical clean-base paths
 
@@ -88,10 +90,13 @@ Full bring-up variant:
 1. capture rollback state
 2. verify storage and staging paths
 3. validate source data
-4. define exact Reth/node versions and chain-spec strategy
-5. bring up Reth in isolation
-6. sample health repeatedly
-7. classify honestly: healthy, converging, fake movement, or broken
+4. if the upload is structurally sound and disk is tight, move or rename the uploaded datadir into the canonical runtime path instead of copying it
+5. snapshot uploaded config artifacts into the canonical config dir, including `reth.toml`, `rollup.json`, `genesis-l2.json`, and any peer metadata worth preserving
+6. remove stale source lock files only after confirming no Reth process is using the datadir
+7. define exact Reth/node versions and chain-spec strategy
+8. bring up Reth in isolation
+9. sample health repeatedly
+10. classify honestly: healthy, converging, fake movement, or broken
 
 ## Red flags
 
@@ -99,6 +104,7 @@ Full bring-up variant:
 - repeated forkchoice/canonical-head complaints
 - chain-spec/fork mismatch symptoms
 - pressure to discard geth before Reth proves itself
+- startup failures from forgotten port collisions with the live geth stack, especially default P2P port `30303`
 
 ## Interpretation rule for peer count
 

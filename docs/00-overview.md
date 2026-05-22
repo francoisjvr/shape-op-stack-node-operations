@@ -52,5 +52,5 @@ The current prep baseline is:
 - upload staging path recreated empty for future use
 - uploaded config artifacts copied into `/root/.shape-mainnet-op-reth-config`
 - stale source lock files removed before first startup attempt
-- no Reth services started yet
+- first parallel runtime attempt executed and logged in `docs/11-first-runtime-attempt.md`
 - current geth fallback left untouched
