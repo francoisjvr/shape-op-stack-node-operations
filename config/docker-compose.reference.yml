@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  op-reth:
+    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-reth:v2.2.2
+    network_mode: host
+    restart: unless-stopped
+    command:
+      - node
+      - --chain=shape
+      - --datadir=/data
+      - --http
+      - --http.addr=0.0.0.0
+      - --http.port=18545
+      - --ws
+      - --ws.addr=0.0.0.0
+      - --ws.port=18546
+      - --authrpc.addr=127.0.0.1
+      - --authrpc.port=18551
+      - --authrpc.jwtsecret=/jwt.txt
+    volumes:
+      - /root/shape-mainnet-op-reth-data:/data
+      - /root/shape-mainnet-geth/jwt.hex:/jwt.txt:ro
+
+  op-node:
+    image: us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:v1.18.0
+    network_mode: host
+    restart: unless-stopped
+    command:
+      - op-node
+      - --network=shape-mainnet
+      - --l2=http://127.0.0.1:18551
+      - --l2.jwt-secret=/shared/jwt.hex
+      - --l2.enginekind=reth
+      - --syncmode=consensus-layer
+      - --rpc.addr=127.0.0.1
+      - --rpc.port=19545
+    volumes:
+      - /root/shape-mainnet-op-node-reth-data:/data
+      - /root/shape-mainnet-geth/jwt.hex:/shared/jwt.hex:ro
