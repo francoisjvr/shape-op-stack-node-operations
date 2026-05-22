@@ -53,6 +53,7 @@ Start from these files:
 - `examples/.env.example`
 - `examples/docker-compose.recommended.yml`
 - `docs/13-current-recommended-recipe.md`
+- `docs/15-copy-paste-bring-up-checklist.md`
 
 Suggested workflow:
 

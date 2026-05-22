@@ -35,6 +35,7 @@ This repo covers:
 - [Current working runtime vs official docs](docs/12-current-working-runtime-vs-official-docs.md)
 - [Current recommended recipe](docs/13-current-recommended-recipe.md)
 - [First-time operator quickstart](docs/14-first-time-operator-quickstart.md)
+- [Copy/paste bring-up checklist](docs/15-copy-paste-bring-up-checklist.md)
 - [Skill](skills/shape-network-mainnet-op-reth-journey/SKILL.md)
 
 ## Practical files

@@ -13,6 +13,7 @@ Practical repo companions:
 - `examples/.env.example`
 - `examples/docker-compose.recommended.yml`
 - `docs/14-first-time-operator-quickstart.md`
+- `docs/15-copy-paste-bring-up-checklist.md`
 
 ## Environment this was proven on
 
