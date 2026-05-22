@@ -63,6 +63,29 @@ Old experimental `reth-fresh` paths were removed so the next upload starts from 
 - `net_peerCount = 0` on current Shape mainnet is not the main health discriminator
 - re-extracting the same snapshot is not guaranteed to fix a stuck canonical head
 
+## What zero EL peers does and does not mean
+
+Current Shape guidance implies zero EL peers does **not** automatically disqualify Reth.
+
+It means the health model is different:
+- do not ask whether Reth discovered peers
+- ask whether `op-reth` can serve execution state correctly
+- ask whether `op-node` can drive `op-reth` correctly over Engine API
+- ask whether execution `eth_blockNumber` actually advances
+- ask whether lag versus public Shape RPC shrinks
+
+## How the current geth node helps
+
+The current geth node is useful as:
+- rollback safety
+- a known-good comparator for execution head and sync behavior
+- a reference for JWT handling, Shape-specific assumptions, and what healthy execution progress looks like
+
+The geth node is **not** expected to:
+- provide EL peers to Reth
+- enable Shape EL peering by itself
+- prove Reth healthy just because geth is healthy
+
 ## Relationship to the geth runbook
 
 Companion repo:

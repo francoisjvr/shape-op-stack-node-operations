@@ -34,6 +34,15 @@ Unhealthy trend:
 - only `unsafe_l2` rises
 - logs repeat forkchoice/payload/canonical-state complaints
 
+## Comparator rule
+
+If the current geth node is available, use it as a comparator during Reth bring-up:
+- compare geth execution head versus Reth execution head
+- compare whether both behave plausibly against public Shape RPC
+- use geth as rollback truth if Reth behavior is ambiguous
+
+Do not treat geth as a peer source for Reth.
+
 ## Sampling rule
 
 Never decide from one sample.

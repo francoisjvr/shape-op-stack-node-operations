@@ -31,6 +31,7 @@ Documentation/reporting standard for this class of task:
 
 Reference:
 - `references/shape-mainnet-reth-reality-notes.md`
+- `references/clean-preupload-baseline.md`
 
 ## When to Use
 
@@ -70,8 +71,18 @@ For the next Reth bring-up track, prefer these canonical paths:
 
 Avoid reviving old `reth-fresh` experiment paths when preparing a clean retry.
 
+In prep-only mode, stale Reth-only scripts/logs from earlier extraction attempts should also be cleared so the next upload starts from a genuinely clean baseline.
+
 ## Fast workflow
 
+Prep-only variant before upload completes:
+1. confirm geth rollback path stays untouched
+2. remove stale Reth-only experiment dirs and ad hoc prep leftovers
+3. recreate or confirm canonical clean-base Reth dirs
+4. do **not** start Reth services yet
+5. wait for upload completion, then validate data before bring-up
+
+Full bring-up variant:
 1. capture rollback state
 2. verify storage and staging paths
 3. validate source data
@@ -93,6 +104,25 @@ If `net_peerCount = 0` on current Shape mainnet:
 - do not treat that alone as failure
 - do not burn time hunting nonexistent EL bootnodes
 - shift debugging to execution head movement, chain spec, engine wiring, fork handling, and data quality
+
+Zero EL peers also does **not** automatically mean the Reth plan is impossible.
+
+Instead ask:
+- can `op-reth` serve execution state correctly
+- can `op-node` drive it correctly over Engine API
+- does execution head actually move
+- does lag against public Shape RPC improve
+
+## Role of the current geth node
+
+Treat the current geth node as:
+- rollback safety
+- a control sample for execution-head comparisons
+- a reference for known-good Shape behavior
+
+Do not treat the current geth node as:
+- a source of EL peers for Reth
+- proof that Reth is healthy
 
 ## Verification checklist
 

@@ -37,7 +37,29 @@ Practical consequence:
 - do not waste hours trying to "fix" EL peering that is intentionally absent
 - if execution head is stuck, look at chain spec, hardfork handling, canonical-head state, engine wiring, or bad data before blaming missing peers
 
-## 6. Fake progress is common
+## 6. Zero peers does not automatically kill the Reth plan
+
+Zero EL peers on current Shape mainnet does **not** by itself mean `op-reth` cannot be a working node.
+
+The actual viability questions are:
+- can `op-reth` read and serve the uploaded execution state correctly
+- can `op-node` talk to `op-reth` correctly over Engine API
+- does execution `eth_blockNumber` advance over repeated samples
+- does lag versus public Shape RPC shrink
+
+## 7. Geth helps as comparator, not as peer source
+
+The current geth node is still useful during the Reth journey, but mainly as:
+- rollback anchor
+- control sample for execution head comparisons
+- reference point for expected Shape behavior
+
+Do not assume the geth node will:
+- supply EL peers to `op-reth`
+- make Shape EL peering exist before Shape enables it
+- rescue a bad Reth canonical-head state automatically
+
+## 8. Fake progress is common
 
 The single most important Reth warning pattern is:
 - `unsafe_l2` moves
