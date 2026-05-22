@@ -33,6 +33,7 @@ This repo covers:
 - [Current prep state](docs/10-current-prep-state.md)
 - [First runtime attempt](docs/11-first-runtime-attempt.md)
 - [Current working runtime vs official docs](docs/12-current-working-runtime-vs-official-docs.md)
+- [Current recommended recipe](docs/13-current-recommended-recipe.md)
 - [Skill](skills/shape-network-mainnet-op-reth-journey/SKILL.md)
 
 ## Core safety rule

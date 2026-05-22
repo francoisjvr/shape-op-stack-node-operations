@@ -36,6 +36,7 @@ Reference:
 - `references/runtime-datadir-promotion.md`
 - `references/first-parallel-runtime-attempt.md`
 - `references/current-working-runtime-vs-official-docs.md`
+- `references/current-recommended-recipe.md`
 
 ## When to Use
 
