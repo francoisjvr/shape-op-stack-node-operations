@@ -31,9 +31,11 @@ Documentation/reporting standard for this class of task:
 
 Reference:
 - `references/shape-mainnet-reth-reality-notes.md`
+- `references/shape-mainnet-el-peering-note.md`
 - `references/clean-preupload-baseline.md`
 - `references/runtime-datadir-promotion.md`
 - `references/first-parallel-runtime-attempt.md`
+- `references/current-working-runtime-vs-official-docs.md`
 
 ## When to Use
 
@@ -62,7 +64,9 @@ Do not use it when:
 - `Jovian` matters.
 - docs may lag runtime truth.
 - zero EL peers is not the main success metric.
-- current Shape mainnet EL peering is intentionally not enabled, sequencing is centralized, and there are no EL bootnodes yet.
+- current Shape mainnet EL peering is intentionally not enabled because sequencing is centralized.
+- there are currently no EL bootnodes, and ELs should have no peers under the present network model.
+- Shape indicated EL bootnodes should only appear once EL-sync is enabled later; until then, do not treat peer-hunting as a productive debugging path.
 - chain-spec handling may matter more than operators expect.
 - current `op-reth` built-in `shape` chain support may lag the live Shape fork set; verify `dump-genesis --chain shape` before trusting it.
 
@@ -124,6 +128,7 @@ When bringing up `op-reth` beside a live geth rollback stack:
 If `net_peerCount = 0` on current Shape mainnet:
 - do not treat that alone as failure
 - do not burn time hunting nonexistent EL bootnodes
+- remember the current network expectation is zero EL peers until Shape enables EL-sync and later introduces EL bootnodes
 - shift debugging to execution head movement, chain spec, engine wiring, fork handling, and data quality
 
 Zero EL peers also does **not** automatically mean the Reth plan is impossible.
