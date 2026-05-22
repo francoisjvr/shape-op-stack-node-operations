@@ -9,6 +9,11 @@ Use this as:
 - a reproducible baseline for a fresh retry
 - a reality-checked companion to the official Shape node docs
 
+Practical repo companions:
+- `examples/.env.example`
+- `examples/docker-compose.recommended.yml`
+- `docs/14-first-time-operator-quickstart.md`
+
 ## Environment this was proven on
 
 Current VPS:
@@ -30,6 +35,11 @@ Practical sizing note:
 - this exact box is enough to run the current parallel experiment
 - disk pressure is real
 - if someone is building a fresh node for themselves, more free SSD space than this is strongly preferable
+
+Noob-safe note:
+- if you are new to this, do **not** treat this box as comfortably overprovisioned
+- it was enough to test and iterate, but it was not roomy
+- extra SSD headroom makes bring-up, retries, and safety copies much less annoying
 
 ## What this recipe assumes
 
@@ -60,6 +70,17 @@ Pinned images from the live working parallel stack:
 - `op-node`: `us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:v1.18.0`
 
 Do not casually swap versions without recording why.
+
+## If you just want the least confusing safe path
+
+Use this order:
+
+1. read `docs/14-first-time-operator-quickstart.md`
+2. fill out `examples/.env.example`
+3. use `examples/docker-compose.recommended.yml` as the starting template
+4. keep the current geth lane untouched until repeated health checks say Reth is genuinely converging
+
+This is the path I would hand to a new operator before telling them to freestyle.
 
 ## Config artifacts to preserve and use explicitly
 

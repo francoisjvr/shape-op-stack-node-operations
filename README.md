@@ -34,7 +34,14 @@ This repo covers:
 - [First runtime attempt](docs/11-first-runtime-attempt.md)
 - [Current working runtime vs official docs](docs/12-current-working-runtime-vs-official-docs.md)
 - [Current recommended recipe](docs/13-current-recommended-recipe.md)
+- [First-time operator quickstart](docs/14-first-time-operator-quickstart.md)
 - [Skill](skills/shape-network-mainnet-op-reth-journey/SKILL.md)
+
+## Practical files
+
+For operators who want something more concrete than prose:
+- `examples/.env.example`
+- `examples/docker-compose.recommended.yml`
 
 ## Core safety rule
 
