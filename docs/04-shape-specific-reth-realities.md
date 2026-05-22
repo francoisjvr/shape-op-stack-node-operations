@@ -28,6 +28,15 @@ Shape docs are useful, but they are not an oracle for what the chain is doing ri
 
 On current Shape mainnet, zero EL peers is not the clean universal sign of brokenness people expect.
 
+More specifically, a Shape developer contact said the execution layer does not currently have peering enabled because sequencing is centralized. That means:
+- there are no EL bootnodes right now
+- ELs should have no peers right now
+- EL bootnodes are expected only later, when Shape enables EL sync
+
+Practical consequence:
+- do not waste hours trying to "fix" EL peering that is intentionally absent
+- if execution head is stuck, look at chain spec, hardfork handling, canonical-head state, engine wiring, or bad data before blaming missing peers
+
 ## 6. Fake progress is common
 
 The single most important Reth warning pattern is:

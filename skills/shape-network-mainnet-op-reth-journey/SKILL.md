@@ -49,6 +49,7 @@ Do not use it when:
 - `Jovian` matters.
 - docs may lag runtime truth.
 - zero EL peers is not the main success metric.
+- current Shape mainnet EL peering is intentionally not enabled, sequencing is centralized, and there are no EL bootnodes yet.
 - chain-spec handling may matter more than operators expect.
 
 ## Fast workflow
@@ -67,6 +68,13 @@ Do not use it when:
 - repeated forkchoice/canonical-head complaints
 - chain-spec/fork mismatch symptoms
 - pressure to discard geth before Reth proves itself
+
+## Interpretation rule for peer count
+
+If `net_peerCount = 0` on current Shape mainnet:
+- do not treat that alone as failure
+- do not burn time hunting nonexistent EL bootnodes
+- shift debugging to execution head movement, chain spec, engine wiring, fork handling, and data quality
 
 ## Verification checklist
 
