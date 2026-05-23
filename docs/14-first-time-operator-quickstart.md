@@ -112,6 +112,19 @@ Good signs:
 - lag versus public Shape head shrinks
 - `safe_l2` and `unsafe_l2` move in a way that matches real execution progress
 
+What "good" looked like once this stack fully caught up in real life:
+- local `eth_blockNumber` matched public Shape head
+- `eth_chainId` matched public Shape (`360`)
+- latest local block hash matched the public latest block hash
+- local `eth_gasPrice` matched public Shape at the same moment
+- `eth_syncing` returned `false`
+- `op-node` kept inserting new unsafe blocks cleanly in logs
+
+Important nuance after catch-up:
+- `unsafe_l2` may sit at or near live head first
+- `safe_l2` and `finalized_l2` can still trail behind `unsafe_l2`
+- that by itself is not proof that the node is unhealthy
+
 Bad signs:
 - execution head stays flat for repeated samples
 - only `unsafe_l2` moves
@@ -136,6 +149,13 @@ Success is:
 Use `docs/06-health-checks.md`.
 
 If you only check one thing, check `eth_blockNumber` repeatedly and compare it to public Shape RPC in **decimal**.
+
+If you want the practical post-sync pass too, also compare:
+- `eth_chainId`
+- `eth_gasPrice`
+- latest block hash from `eth_getBlockByNumber`
+- whether the containers have restart count `0`
+- whether recent `op-reth` logs stay free of real errors
 
 ## Bottom line
 

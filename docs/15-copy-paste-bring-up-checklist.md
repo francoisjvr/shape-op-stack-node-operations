@@ -162,6 +162,54 @@ for i in 1 2 3; do
 done
 ```
 
+## 10.5 If it catches up, run the post-sync sanity pass
+
+Once local head reaches public head, do one more boring check instead of declaring victory instantly.
+
+```bash
+curl -s -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}' \
+  http://127.0.0.1:18545
+
+curl -s -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}' \
+  https://mainnet.shape.network
+
+curl -s -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":1}' \
+  http://127.0.0.1:18545
+
+curl -s -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":1}' \
+  https://mainnet.shape.network
+
+curl -s -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["latest",false],"id":1}' \
+  http://127.0.0.1:18545
+
+curl -s -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["latest",false],"id":1}' \
+  https://mainnet.shape.network
+
+docker inspect -f '{{.Name}} restart={{.RestartCount}} status={{.State.Status}}' \
+  shape-mainnet-op-reth shape-mainnet-op-node-reth
+
+docker logs --since 20m shape-mainnet-op-reth 2>&1 | tail -n 80
+docker logs --since 20m shape-mainnet-op-node-reth 2>&1 | tail -n 80
+```
+
+What you want:
+- local and public `eth_chainId` both say chain `360`
+- local and public `eth_gasPrice` are in family, ideally identical at sample time
+- latest local block hash matches public latest block hash
+- restart count stays `0`
+- `op-node` still processes unsafe blocks cleanly
+
+What should not scare you by itself:
+- `net_peerCount = 0`
+- `safe_l2` and `finalized_l2` lagging behind `unsafe_l2`
+- occasional `op-node` peer ping warnings while the execution head still matches public Shape
+
 ## 11. If it looks bad, stop the Reth lane cleanly
 
 ```bash
