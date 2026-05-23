@@ -1,12 +1,13 @@
 # Shape Mainnet op-Reth Journey
 
-Detailed operator repo for bringing up **Shape Network mainnet** on `op-reth` + `op-node` without destroying the currently recovered geth fallback.
+Detailed operator repo for the **primary Shape Network mainnet** `op-reth` + `op-node` stack.
 
-This repo is intentionally separate from the geth recovery runbook.
+`op-geth` is being sunset. This repo is the main mainnet repo now.
 
-Reason:
-- the geth repo records what already worked
-- this repo tracks the Reth journey, experiments, guardrails, and final setup path we want to use next
+The old geth runbook remains useful only for:
+- archival incident history
+- rollback context while any legacy lane still exists
+- understanding why `/root/Upload` mattered on the old stack
 
 ## Scope
 
@@ -46,12 +47,22 @@ For operators who want something more concrete than prose:
 
 ## Core safety rule
 
-Do not sacrifice the currently working geth stack just to “see if Reth works.”
+Reth is the main path.
 
-Until Reth proves healthy:
-- preserve `/root/Upload`
-- preserve geth rollback capability
-- keep Reth paths and ports isolated
+Use standard Reth runtime paths for the live node:
+- `/root/shape-mainnet-op-reth-data`
+- `/root/shape-mainnet-op-node-reth-data`
+- `/root/.shape-mainnet-op-reth-config`
+
+`/root/Upload` should be treated as optional support storage:
+- backup copy
+- download cache
+- transfer landing zone
+
+If any legacy geth lane still exists during transition:
+- preserve `/root/Upload` until you have verified it is no longer needed
+- keep rollback capability only as long as the sunset period requires
+- keep Reth paths and ports isolated from old services
 
 ## Current prepared base state
 
@@ -107,15 +118,15 @@ The geth node is **not** expected to:
 
 ## Relationship to the geth runbook
 
-Companion repo:
+Companion archival repo:
 - `shape-mainnet-node-runbook`
 
-Use that repo for:
-- the already-proven geth recovery
-- the current stable fallback
-- incident history and why `/root/Upload` matters
+Use that repo only for:
+- the already-proven geth recovery history
+- legacy rollback notes while geth is being sunset
+- incident history and why `/root/Upload` mattered on the old stack
 
 Use this repo for:
-- the upcoming Reth journey
-- fast-moving migration notes
-- experiments, decision branches, and future cutover criteria
+- the live and future Shape mainnet Reth setup
+- the canonical operator path
+- setup, health checks, and cutover criteria for `op-reth` + `op-node`

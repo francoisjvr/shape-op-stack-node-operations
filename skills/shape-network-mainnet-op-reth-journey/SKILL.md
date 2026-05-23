@@ -1,7 +1,7 @@
 ---
 name: shape-network-mainnet-op-reth-journey
-description: Use when preparing, staging, or troubleshooting a Shape Network mainnet op-reth plus op-node deployment while preserving the current geth rollback path.
-version: 1.0.0
+description: Use when setting up, operating, or troubleshooting the primary Shape Network mainnet op-reth plus op-node stack. op-geth is sunset and retained only as archival rollback context where still relevant.
+version: 1.1.0
 author: Hermes Agent
 license: MIT
 metadata:
@@ -14,13 +14,13 @@ metadata:
 
 ## Overview
 
-This skill is for the **Shape Network mainnet Reth track**.
+This skill is for the **primary Shape Network mainnet Reth stack**.
 
-Use it when the job is no longer “fix the current geth stack” and has become:
-- prepare Reth safely
-- stand up Reth in parallel
-- measure whether Reth is actually healthy
-- decide whether to cut over or roll back
+Use it when the job is:
+- set up Reth as the main Shape mainnet path
+- operate or troubleshoot the live Reth stack
+- verify whether Reth is actually healthy
+- document cutover, retirement of legacy geth, or rollback conditions if any old lane still exists
 
 This is explicitly Shape-specific.
 
@@ -41,24 +41,26 @@ Reference:
 ## When to Use
 
 Use it when:
-- the user wants to work on Reth later today
-- a dedicated Reth bring-up is the main task
-- the geth path is already good enough as fallback
-- you need migration discipline, not just incident recovery discipline
+- a dedicated Reth bring-up, setup, or runtime fix is the main task
+- `op-reth` plus `op-node` is the canonical Shape mainnet path being documented
+- any remaining geth lane is only fallback, rollback, or archival context
+- you need mainnet operating discipline, not legacy geth incident-response discipline
 
 Do not use it when:
-- the primary need is just reviving the current geth node
-- the system is still in immediate outage mode and rollback has not been stabilized
+- the primary need is just reviving the old geth node
+- the task is generic Ethereum/geth troubleshooting rather than Shape mainnet Reth
 
 ## Core rules
 
-1. Preserve the current geth rollback path.
+1. Treat `op-reth` plus `op-node` as the main Shape mainnet path.
 2. Do not treat `unsafe_l2` movement as success.
 3. Report Shape block numbers in decimal.
 4. Treat Shape mainnet specifics as first-class constraints.
 5. Keep repo docs / skill notes synchronized with what was actually observed.
-6. When a fresh uploaded datadir arrives, validate it structurally before any bring-up and prefer in-place use over a full copy when disk is tight.
-7. If the uploaded datadir becomes the runtime datadir, record that rename/move decision in repo docs immediately and snapshot the uploaded config files separately.
+6. Use explicit standard paths and keep `/root/Upload` as backup, download cache, or transfer landing zone rather than the default live Reth mount.
+7. When a fresh uploaded datadir arrives, validate it structurally before any bring-up and prefer in-place use over a full copy when disk is tight.
+8. If the uploaded datadir becomes the runtime datadir, record that rename/move decision in repo docs immediately and snapshot the uploaded config files separately.
+9. Treat `op-geth` as sunset; keep it only as rollback or archival context if it still exists on the box.
 
 ## Shape-specific realities
 
@@ -156,14 +158,15 @@ When the user says the Reth data upload is finished and wants a look without sta
 Reference: `references/uploaded-datadir-validation.md`
 
 
-## Role of the current geth node
+## Role of any remaining geth lane
 
-Treat the current geth node as:
-- rollback safety
+Treat any remaining geth node as:
+- rollback safety during transition
 - a control sample for execution-head comparisons
-- a reference for known-good Shape behavior
+- archival reference for known-good Shape behavior
 
-Do not treat the current geth node as:
+Do not treat any remaining geth node as:
+- the main Shape mainnet path
 - a source of EL peers for Reth
 - proof that Reth is healthy
 
