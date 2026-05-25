@@ -71,6 +71,8 @@ docker compose -f examples/docker-compose.recommended.yml --env-file .env up -d 
 docker logs --tail 120 shape-mainnet-op-reth
 ```
 
+If that log command stays blank even though the container is up, your `op-reth` command is missing explicit stdout logging. Add `--log.stdout.format=log-fmt` and `--log.stdout.filter=info`, then recreate the container.
+
 You want:
 - container starts cleanly
 - no instant path/config crash
@@ -129,6 +131,8 @@ curl -s -H 'Content-Type: application/json' \
 docker logs --since 10m shape-mainnet-op-reth | tail -n 120
 docker logs --since 10m shape-mainnet-op-node-reth | tail -n 120
 ```
+
+`op-reth` should now emit normal startup and block-processing lines into Docker logs. If `op-node` is noisy but `op-reth` is still silent, treat that as a config bug, not as proof the node is idle.
 
 Remember:
 - startup is not success

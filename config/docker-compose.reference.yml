@@ -18,6 +18,8 @@ services:
       - --authrpc.addr=127.0.0.1
       - --authrpc.port=18551
       - --authrpc.jwtsecret=/jwt.txt
+      - --log.stdout.format=log-fmt
+      - --log.stdout.filter=info
     volumes:
       - /root/shape-mainnet-op-reth-data:/data
       - /root/shape-mainnet-geth/jwt.hex:/jwt.txt:ro

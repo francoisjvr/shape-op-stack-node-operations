@@ -22,6 +22,8 @@ services:
       - --rollup.historicalrpc=${SHAPE_HISTORICAL_RPC_URL}
       - --rollup.disable-tx-pool-gossip
       - --disable-discovery
+      - --log.stdout.format=log-fmt
+      - --log.stdout.filter=info
     volumes:
       - ${RETH_DATA_DIR}:${RETH_DATA_DIR}
       - ${RETH_CONFIG_DIR}:${RETH_CONFIG_DIR}:ro
@@ -60,4 +62,5 @@ services:
 # - Do NOT point these paths at your existing geth datadir.
 # - Do NOT reuse default ports if a live geth stack is already on this machine.
 # - Keep the JWT secret path and rollup/chain files explicit.
+# - Keep explicit stdout logging enabled or `docker logs shape-mainnet-op-reth` may look empty.
 # - Judge success by repeated block-number samples, not by whether containers are merely 'Up'.
