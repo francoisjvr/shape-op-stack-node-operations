@@ -212,6 +212,35 @@ docker logs --tail 80 shape-sepolia-op-node-reth
 docker logs --tail 80 shape-sepolia-op-reth
 ```
 
+## 2026-05-26 follow-up monitor check
+
+A later bounded live check against the isolated Sepolia lane confirmed that the earlier flat-head failure mode has still not returned.
+
+Observed over a 65-second window:
+
+- first local execution height: `30276177`
+- second local execution height: `30276761`
+- execution head advance during window: `584` blocks
+- first `safe_l2`: `30276177`
+- second `safe_l2`: `30276762`
+- `safe_l2` advance during window: `585` blocks
+- first `unsafe_l2`: `30276177`
+- second `unsafe_l2`: `30276762`
+- `unsafe_l2` advance during window: `585` blocks
+- public Shape Sepolia tip during second sample: `30426186`
+- resulting local execution lag during second sample: `149425` blocks
+
+Recent logs also stayed on the healthy pattern:
+
+- `shape-sepolia-op-reth` continued logging repeated `Block added to canonical chain`
+- `shape-sepolia-op-node-reth` continued logging repeated `Inserted new L2 unsafe block`
+- recent logs did **not** show the old retry/stall markers:
+  - `failed to insert unsafe payload`
+  - `updated forkchoice, but node is syncing`
+  - `failed to check for unsafe L2 blocks to sync`
+
+So this lane should still be classified as **healthy catch-up**, not stalled and not fully caught up yet.
+
 ## Operator takeaway
 
 If this Sepolia lane is retried again, do **not** start from the naive public-endpoint profile.
