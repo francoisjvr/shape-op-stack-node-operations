@@ -132,7 +132,7 @@ That means the lane became **meaningfully alive**, not just superficially starte
 
 ## What did not become healthy yet
 
-Even after the better L1 setup, the local execution head stayed flat during repeated checks:
+With the first throttled public-endpoint profile, the local execution head still stayed flat during repeated checks:
 
 - local `eth_blockNumber` stayed at `30141035`
 
@@ -146,26 +146,46 @@ At the same time, logs showed `op-node` repeatedly trying to feed a newer unsafe
 
 `op-reth` also kept logging the same received new payload while its own reported latest block remained flat.
 
+## What materially improved after switching to dedicated Alchemy Sepolia L1 endpoints
+
+Later, the lane was switched from PublicNode to the user's dedicated Alchemy Sepolia endpoints:
+
+- execution RPC: `https://eth-sepolia.g.alchemy.com/v2/<KEY>`
+- beacon RPC: `https://eth-sepoliabeacon.g.alchemy.com/v2/<KEY>`
+- `--l1.rpckind=alchemy`
+
+That change materially altered the behavior.
+
+Observed after the switch:
+
+- execution `eth_blockNumber` resumed advancing
+- `eth_syncing` returned `false`
+- `safe_l2` and `unsafe_l2` advanced instead of staying pinned
+- the lane moved from the old flat point around `30,141,035` up through `30,145,561`, then `30,146,002`, then `30,146,254+` during live verification
+- `op-node` peer stats remained healthy while derivation continued
+
+A bounded live check confirmed real forward execution movement over time:
+
+- first local execution height: `30,145,561`
+- later local execution height: `30,146,254`
+- 45-second follow-up still moved forward: `30,146,001+` to `30,146,254+` while `safe_l2` / `unsafe_l2` continued climbing
+
+At that point the lane was no longer in the old "payloads arrive but canonical head never moves" failure mode.
+
 ## Current interpretation
 
-This test lane is in a **better-than-broken but not-yet-healthy** state:
+This lane should now be treated as:
 
-- good:
-  - isolated bring-up works
-  - mainnet remained untouched
-  - snapshot artifact is present
-  - `op-node` is deriving and moving through L1 history
-  - public-RPC throttling clearly improved behavior
-- not good enough yet:
-  - local L2 execution head has not resumed forward movement
-  - unsafe payload insertion is repeating while `op-reth` still reports itself syncing
+- **successfully isolated**
+- **past the earlier flat-head stall**
+- **actively converging but still behind tip**
 
-So this lane should be treated as:
+During the verification window, the node was still roughly `~265k` L2 blocks behind public Shape Sepolia tip, so the right classification is:
 
-- **successful isolation and partial bring-up**
-- **successful observability finding**
-- **not yet a clean healthy Sepolia convergence result**
+- **healthy catching-up sync**
+- **not yet fully caught up / finished**
 
+The most important root-cause takeaway from this lane is that the first public-endpoint profile was good enough to prove the config path, but not good enough to sustain healthy Sepolia convergence. Switching to dedicated Alchemy Sepolia execution + beacon endpoints was the change that finally restored real execution-head movement.
 ## Minimal verification commands for this lane
 
 ### Local testnet execution head
