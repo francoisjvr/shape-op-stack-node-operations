@@ -39,6 +39,53 @@ Observed runtime datadir size during verification:
 
 - `/root/shape-sepolia-op-reth-data` about `41G`
 
+## Config provenance actually observed
+
+The live config did **not** come from the current public Shape docs artifacts unchanged.
+
+Observed on the VPS:
+
+- `/root/.shape-sepolia-op-reth-config/rollup.snapshot.json`
+- `/root/.shape-sepolia-op-reth-config/genesis-l2.snapshot.json`
+- `/root/.shape-sepolia-op-reth-config/reth.snapshot.toml`
+
+Those three files are byte-identical to the same files inside the extracted runtime datadir:
+
+- `/root/shape-sepolia-op-reth-data/rollup.json`
+- `/root/shape-sepolia-op-reth-data/genesis-l2.json`
+- `/root/shape-sepolia-op-reth-data/reth.toml`
+
+So the live lane is effectively using the snapshot-bundled config, copied back out into the explicit config directory.
+
+That matters because the current public Shape Sepolia docs still point to:
+
+- rollup: `https://arweave.net/gSb3hOzLaBIBy-AyWA2O2_03sfXJ-IwPqmV6Mhstmj8`
+- genesis: `https://arweave.net/nw6opum2ALT9T39TSAAK_Wq0Z75aZJWd6J2RmiWHm_s`
+
+And the public rollup artifact currently differs materially from the live lane:
+
+- docs rollup has `holocene_time = 1739880000`
+- docs rollup omits `chain_op_config`
+- docs rollup omits `isthmus_time`
+- docs rollup omits `jovian_time`
+
+But the live snapshot-backed rollup includes:
+
+- `holocene_time = 1739880000`
+- `isthmus_time = 1763650800`
+- `jovian_time = 1777552200`
+- `chain_op_config` with EIP-1559 elasticity/denominator fields
+
+The current public OP Superchain Registry also does not validate the live lane's later Sepolia schedule. At the time of writing:
+
+- `superchain/configs/sepolia/shape.toml` only carries through `granite_time`
+- `superchain/configs/sepolia/superchain.toml` publishes Sepolia-wide defaults including:
+  - `holocene_time = 1732633200`
+  - `isthmus_time = 1744905600`
+  - `jovian_time = 1763568001`
+
+So the live lane should be understood as using a newer or different snapshot-bundled Shape Sepolia config than the public docs and public registry currently expose.
+
 ## Testnet ports used
 
 The isolated Sepolia lane used its own local ports:
