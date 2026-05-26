@@ -38,6 +38,7 @@ This repo covers:
 - [First-time operator quickstart](docs/14-first-time-operator-quickstart.md)
 - [Copy/paste bring-up checklist](docs/15-copy-paste-bring-up-checklist.md)
 - [Shape Sepolia testnet lane](docs/16-shape-sepolia-testnet-lane.md)
+- [Shape RPC and Sepolia provider notes](docs/16-shape-rpc-and-sepolia-provider-notes.md)
 - [Skill](skills/shape-network-mainnet-op-reth-journey/SKILL.md)
 
 ## Practical files
@@ -45,6 +46,18 @@ This repo covers:
 For operators who want something more concrete than prose:
 - `examples/.env.example`
 - `examples/docker-compose.recommended.yml`
+
+## RPC provider note
+
+Current Shape docs now make the provider split more explicit, including for **Shape Sepolia**:
+- public RPC exists and is useful for light/manual checks
+- for production or high-throughput testing, Shape points operators toward a node provider such as Alchemy
+
+Operationally, that matches the blunt lesson here too:
+- a paid provider endpoint tends to behave better than the public endpoint when you need repeated comparisons, automation, or steadier throughput
+
+See:
+- `docs/16-shape-rpc-and-sepolia-provider-notes.md`
 
 ## Core safety rule
 

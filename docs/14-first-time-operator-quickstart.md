@@ -30,6 +30,20 @@ Make sure you have all of these:
 
 If you do **not** have those yet, stop here and fix that first.
 
+## RPC provider blunt note
+
+Current Shape docs are explicit that the public RPC is not the right thing to lean on for production or high-throughput testing.
+
+That matters for this repo too:
+- public Shape RPC is fine for occasional sanity checks
+- if you are doing repeated comparisons, automation, or heavier testing, a provider endpoint is safer
+- in practice, a paid API/provider endpoint seems to work better than the public endpoint when you want steadier behavior
+
+The current Shape docs also now spell this out for **Shape Sepolia**, not just mainnet.
+
+See:
+- `docs/16-shape-rpc-and-sepolia-provider-notes.md`
+
 ## The safest mental model
 
 Treat the machine as having **two lanes**:

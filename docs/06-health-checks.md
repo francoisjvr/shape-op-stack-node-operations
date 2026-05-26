@@ -26,6 +26,11 @@ curl -s -H 'Content-Type: application/json' \
   https://mainnet.shape.network
 ```
 
+Provider note:
+- the public endpoint is fine for quick manual checks
+- for repeated sampling, automation, or heavier throughput, prefer a provider endpoint
+- current Shape docs explicitly steer production/high-throughput usage toward a node provider such as Alchemy, and in practice a paid provider tends to behave better than the public endpoint
+
 ### Sync state
 ```bash
 curl -s -H 'Content-Type: application/json' \
