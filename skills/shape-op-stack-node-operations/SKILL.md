@@ -1,7 +1,7 @@
 ---
 name: shape-op-stack-node-operations
 description: Operate, recover, verify, and document the current self-hosted Shape mainnet Reth stack using op-reth plus op-node.
-version: 1.1.0
+version: 1.2.0
 author: Ash
 license: MIT
 platforms: [linux]
@@ -20,6 +20,7 @@ Reference:
 - `references/shape-mainnet-repair-trie-runbook-2026-06.md` — concise offline `repair-trie` execution order, watcher pattern, and post-repair verification signals from the preserved live-datadir recovery.
 - `references/reth-reseed-after-stalled-restart.md` — when to stop iterating on unwind/repair attempts and switch to a clean reseed from the latest downloaded Reth snapshot, while preserving operator notes.
 - `references/large-snapshot-staging-and-extraction.md` — durable pattern for staging very large Shape snapshots: prefer local archive reuse, resumable `aria2c`, and offline decompression instead of `curl | tar` streaming.
+- `references/ssh-monitoring-and-cron-watchdogs.md` — SSH-first monitoring commands for the live Dockerized stack: `docker logs`, decimal head checks, lag watch loops, when `journalctl` is relevant, and lightweight cron/watchdog patterns.
 
 ## When to use
 
@@ -85,6 +86,8 @@ Use all of:
 - `optimism_syncStatus`
 - recent `op-reth` logs
 - recent `op-node` logs
+
+For exact SSH-ready monitor commands, use `references/ssh-monitoring-and-cron-watchdogs.md`.
 
 ## Shape-specific pitfalls
 
@@ -272,6 +275,7 @@ See `references/shape-official-snapshot-sources.md` for the absorbed runbook-aut
 - `references/shape-rpc-access-vantage-notes-2026-06.md` — why official public Shape RPC can return `403` from the VPS while private/local RPC remains healthy, and how to verify parity from an alternate vantage point.
 - `references/shape-sepolia-config-provenance.md` — evidence trail for when live Shape Sepolia rollup/genesis files diverge from public Shape docs artifacts and the public Superchain Registry.
 - `references/free-l1-provider-cutover-and-reset-behavior-2026-06.md` — validated free Ethereum mainnet execution+beacon fallback endpoints for the Shape VPS, conservative `op-node` throttling flags, and the observed long post-cutover rewind behavior.
+- `references/repo-canonicalization-and-metadata-pass-2026-06.md` — second-pass repo polish after canonical rename: README framing, doc numbering, practical-file surfacing, GitHub description/homepage/topics, and post-rename verification.
 
 ### Pitfall: free-provider cutover can remove 429s but still leave the node temporarily worse
 If `op-node` is stalling on L1 quota exhaustion, swapping to reachable free public Ethereum providers can be a valid stopgap. In this session, the Shape VPS could reach:
