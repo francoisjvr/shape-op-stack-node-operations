@@ -16,7 +16,7 @@ You already have:
 ## 0. Go to the repo
 
 ```bash
-cd /home/moltbot/.hermes/hermes-agent/shape-mainnet-op-reth-journey
+cd /home/moltbot/.hermes/hermes-agent/shape-op-stack-node-operations
 ```
 
 ## 1. Sanity-check the files you are about to rely on

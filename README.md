@@ -1,4 +1,4 @@
-# Shape Mainnet op-Reth Journey
+# Shape OP Stack Node Operations
 
 Detailed operator repo for the **primary Shape Network mainnet** `op-reth` + `op-node` stack.
 
@@ -39,7 +39,7 @@ This repo covers:
 - [Copy/paste bring-up checklist](docs/15-copy-paste-bring-up-checklist.md)
 - [Shape Sepolia testnet lane](docs/16-shape-sepolia-testnet-lane.md)
 - [Shape RPC and Sepolia provider notes](docs/16-shape-rpc-and-sepolia-provider-notes.md)
-- [Skill](skills/shape-network-mainnet-op-reth-journey/SKILL.md)
+- [Skill](skills/shape-op-stack-node-operations/SKILL.md)
 
 ## Practical files
 

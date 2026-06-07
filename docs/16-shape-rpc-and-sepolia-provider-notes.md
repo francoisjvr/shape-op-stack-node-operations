@@ -36,7 +36,7 @@ The key operational wording from that page is basically:
 
 ## What that means for this repo
 
-Even though this repo is a **mainnet Reth** journey, the same lesson matters any time we:
+Even though this repo is a **mainnet Reth** operations repo, the same lesson matters any time we:
 - compare local head vs a public Shape endpoint
 - run repeated sync checks
 - automate RPC polling

@@ -49,7 +49,7 @@ The actual viability questions are:
 
 ## 7. Geth helps as comparator, not as peer source
 
-The current geth node is still useful during the Reth journey, but mainly as:
+The current geth node is still useful during current Reth operations, but mainly as:
 - rollback anchor
 - control sample for execution head comparisons
 - reference point for expected Shape behavior
