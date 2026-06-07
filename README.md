@@ -1,8 +1,8 @@
 # Shape OP Stack Node Operations
 
-Detailed operator repo for the **primary Shape Network mainnet** `op-reth` + `op-node` stack.
+Reth-first operator repo for the **primary Shape Network mainnet** `op-reth` + `op-node` stack.
 
-`op-geth` is being sunset. This repo is the main mainnet repo now.
+This is the canonical mainnet operations repo for bring-up, health checks, cutover, rollback, and recovery on the current Shape Reth lane.
 
 The old geth runbook remains useful only for:
 - archival incident history
@@ -38,7 +38,7 @@ This repo covers:
 - [First-time operator quickstart](docs/14-first-time-operator-quickstart.md)
 - [Copy/paste bring-up checklist](docs/15-copy-paste-bring-up-checklist.md)
 - [Shape Sepolia testnet lane](docs/16-shape-sepolia-testnet-lane.md)
-- [Shape RPC and Sepolia provider notes](docs/16-shape-rpc-and-sepolia-provider-notes.md)
+- [Shape RPC and Sepolia provider notes](docs/17-shape-rpc-and-sepolia-provider-notes.md)
 - [Skill](skills/shape-op-stack-node-operations/SKILL.md)
 
 ## Practical files
@@ -46,6 +46,8 @@ This repo covers:
 For operators who want something more concrete than prose:
 - `examples/.env.example`
 - `examples/docker-compose.recommended.yml`
+- `config/docker-compose.reference.yml`
+- `templates/experiment-log-template.md`
 
 ## RPC provider note
 
@@ -57,7 +59,7 @@ Operationally, that matches the blunt lesson here too:
 - a paid provider endpoint tends to behave better than the public endpoint when you need repeated comparisons, automation, or steadier throughput
 
 See:
-- `docs/16-shape-rpc-and-sepolia-provider-notes.md`
+- `docs/17-shape-rpc-and-sepolia-provider-notes.md`
 
 ## Core safety rule
 
@@ -133,7 +135,7 @@ The geth node is **not** expected to:
 ## Relationship to the geth runbook
 
 Companion archival repo:
-- `shape-mainnet-node-runbook`
+- [francoisjvr/shape-mainnet-node-runbook](https://github.com/francoisjvr/shape-mainnet-node-runbook)
 
 Use that repo only for:
 - the already-proven geth recovery history

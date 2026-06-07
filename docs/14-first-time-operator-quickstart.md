@@ -42,7 +42,7 @@ That matters for this repo too:
 The current Shape docs also now spell this out for **Shape Sepolia**, not just mainnet.
 
 See:
-- `docs/16-shape-rpc-and-sepolia-provider-notes.md`
+- `docs/17-shape-rpc-and-sepolia-provider-notes.md`
 
 ## The safest mental model
 
