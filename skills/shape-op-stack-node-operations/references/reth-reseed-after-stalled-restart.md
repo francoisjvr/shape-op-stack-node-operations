@@ -27,6 +27,8 @@ For this user, prefer the low-friction recovery path when a current snapshot is 
 3. Stop or kill any background watcher from abandoned repair attempts so it does not restart containers mid-reseed.
 4. Remove any temporary repair container left behind by earlier offline work.
 5. Kill stale archive-inspection readers against the same tarball so the real extract gets disk and CPU priority.
+   - When doing this over SSH from a wrapper that itself mentions the archive path, avoid broad `pkill -f` patterns that can match your live orchestration command and kill the session you are using to recover the node.
+   - Prefer listing candidate PIDs first and killing only the confirmed stale readers.
 
 ## Canonical reseed sequence
 

@@ -42,11 +42,24 @@ If an empty-datadir canary reproduces "payload observed but canonical head does 
 - either the lane needs longer observation from genesis,
 - or the issue is in how payload insertion / canonical advancement is behaving under the current runtime assumptions.
 
+## Longer-sample confirmation from the follow-up session
+A later follow-up kept the canary and repaired primary lane under observation long enough to sharpen the classification:
+- the repaired primary lane did show **partial** canonical movement (`29403655 -> 29404322`) after offline `repair-trie`, but then flatlined again
+- `safe_l2` and `finalized_l2` only caught up to that same new head instead of continuing toward tip
+- the formerly missing target block still stayed absent
+- the isolated empty-datadir canary kept `head=0`, `safe_l2=0`, and `finalized_l2=0` while `current_l1` and `head_l1` continued to advance
+
+Interpretation:
+- offline `repair-trie` can yield a real-but-incomplete win; do not overcall a few hundred blocks of movement as recovery
+- if the from-genesis canary also refuses to canonically advance while it clearly tracks L1, the failure is **not snapshot-only**
+- classify that result as `broader canonicalization/runtime issue still present`, with the original snapshot/datadir no longer the sole suspect
+
 ## Use in future incidents
 When a repaired snapshot still looks bad:
 1. Launch an isolated mainnet canary on ports that are confirmed unused.
 2. Keep the primary lane untouched.
-3. Distinguish three outcomes:
+3. Distinguish four outcomes:
    - **Canary head advances from 0** -> snapshot lane remains the prime suspect.
    - **Canary tracks L1 but head stays 0 while payloads arrive** -> not snapshot-only; escalate as a broader runtime/canonicalization issue.
+   - **Primary lane moves only a few hundred blocks after repair and then stalls again** -> treat as partial recovery, not success.
    - **Canary cannot even initialize cleanly** -> fix isolation/config before drawing conclusions.

@@ -84,10 +84,12 @@ echo "local=$LOCAL public=$PUBLIC lag=$((PUBLIC-LOCAL))"
 
 ### Rollup sync status
 
+On the current live Shape mainnet Reth lane, `op-node` RPC is bound to `127.0.0.1:19545`.
+
 ```bash
 curl -s -H 'Content-Type: application/json' \
   -d '{"jsonrpc":"2.0","method":"optimism_syncStatus","params":[],"id":1}' \
-  http://127.0.0.1:18545 \
+  http://127.0.0.1:19545 \
 | python3 -m json.tool
 ```
 
