@@ -39,6 +39,7 @@ This repo covers:
 - [Copy/paste bring-up checklist](docs/15-copy-paste-bring-up-checklist.md)
 - [Shape Sepolia testnet lane](docs/16-shape-sepolia-testnet-lane.md)
 - [Shape RPC and Sepolia provider notes](docs/17-shape-rpc-and-sepolia-provider-notes.md)
+- [Fresh-start rebuild plan](docs/18-mainnet-fresh-start-from-fresher-snapshot.md)
 - [Skill](skills/shape-op-stack-node-operations/SKILL.md)
 
 ## Practical files
@@ -80,25 +81,18 @@ If any legacy geth lane still exists during transition:
 - keep rollback capability only as long as the sunset period requires
 - keep Reth paths and ports isolated from old services
 
-## Current prepared base state
+## Current restart posture
 
-The VPS has now moved from clean pre-upload baseline to **post-upload prep state** without starting any Reth services.
+The last stalled mainnet attempt has been torn down on purpose.
 
-Canonical paths now are:
-- upload staging: `/root/shape-mainnet-op-reth-upload`
-- Reth runtime data: `/root/shape-mainnet-op-reth-data`
-- Reth op-node data: `/root/shape-mainnet-op-node-reth-data`
-- Reth config: `/root/.shape-mainnet-op-reth-config`
+Current operator rule:
+- all mainnet Shape node containers are removed
+- old mainnet snapshot/data directories were deleted
+- the next attempt waits for a fresher snapshot instead of reusing the stale one
+- when restart time comes, rebuild from scratch using `docs/18-mainnet-fresh-start-from-fresher-snapshot.md`
+- keep `op-node` on stable loopback L1 URLs backed by the two fresh keys, not the old near-exhausted direct path
 
-Current observed state:
-- the uploaded Reth datadir was structurally validated
-- because root free space was only about `59G`, the uploaded datadir was **moved** into `/root/shape-mainnet-op-reth-data` instead of copied
-- `/root/shape-mainnet-op-reth-upload` was recreated as an empty future staging path
-- uploaded `reth.toml`, `rollup.json`, `genesis-l2.json`, and `known-peers.json` were copied into `/root/.shape-mainnet-op-reth-config`
-- stale source lock files were removed before any first local startup attempt
-- first parallel runtime attempt now exists and is recorded in `docs/11-first-runtime-attempt.md`
-
-Old experimental `reth-fresh` paths were removed first so the upload landed on a known clean base instead of ambiguous leftovers.
+This repo still keeps the earlier bring-up and failure docs because they explain what worked, what failed, and why the next retry should be cleaner.
 
 ## Key Shape-specific lessons already known
 

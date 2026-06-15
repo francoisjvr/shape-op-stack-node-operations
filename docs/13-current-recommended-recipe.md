@@ -123,9 +123,9 @@ Why these matter:
 
 Current working `op-node` runtime characteristics:
 
-- `--l1=<Ethereum mainnet RPC>`
+- `--l1=http://127.0.0.1:18580`
 - `--l1.rpckind=alchemy`
-- `--l1.beacon=<Ethereum mainnet beacon RPC>`
+- `--l1.beacon=http://127.0.0.1:18581`
 - `--l2=http://127.0.0.1:18551`
 - `--l2.jwt-secret=/shared/jwt.hex`
 - `--rollup.config=/config/rollup.runtime.json`
@@ -137,6 +137,11 @@ Current working `op-node` runtime characteristics:
 - `--metrics.port=17300`
 - explicit Shape bootnodes
 - P2P listen ports `19222` TCP/UDP
+
+Provider rule for the next clean retry:
+- keep `op-node` pointed at stable loopback L1 URLs
+- back the local multiplexer with the two fresh paid keys first
+- do not move the old near-exhausted key back into the active first position
 
 Why these matter:
 - this is the combination that actually produced a live parallel Reth stack on this VPS

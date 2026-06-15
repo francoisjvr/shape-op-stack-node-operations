@@ -32,25 +32,21 @@ Shape mainnet has a few operational properties that punish lazy assumptions:
 
 ## Most important starting facts
 
-- current fallback geth datadir: `/root/Upload`
-- current Reth upload staging dir: `/root/shape-mainnet-op-reth-upload`
-- current Reth runtime dir: `/root/shape-mainnet-op-reth-data`
-- clean Reth op-node dir: `/root/shape-mainnet-op-node-reth-data`
-- clean Reth config dir: `/root/.shape-mainnet-op-reth-config`
-- current runtime datadir is the validated uploaded dataset moved into `/root/shape-mainnet-op-reth-data`
+- canonical upload staging path: `/root/shape-mainnet-op-reth-upload`
+- canonical Reth runtime path: `/root/shape-mainnet-op-reth-data`
+- canonical Reth op-node path: `/root/shape-mainnet-op-node-reth-data`
+- canonical Reth config path: `/root/.shape-mainnet-op-reth-config`
 - user preference: try Reth first for future Shape experiments
 - user wants Reth status reported directly, not legacy geth chatter, unless asked
+- current restart posture: wait for a fresher snapshot, then rebuild from scratch instead of reviving the stalled datadir
+- preferred L1 provider posture: keep `op-node` on loopback multiplexer URLs and put the two fresh keys first on the beacon/provider side
 
-## Current prep-state rule
+## Current fresh-start rule
 
-Do not resurrect old `reth-fresh` experiment paths.
-
-The current prep baseline is:
-- old Reth-only experiment dirs removed
-- clean canonical Reth dirs recreated
-- uploaded Reth datadir validated and renamed into canonical runtime path instead of copied
-- upload staging path recreated empty for future use
-- uploaded config artifacts copied into `/root/.shape-mainnet-op-reth-config`
-- stale source lock files removed before first startup attempt
-- first parallel runtime attempt executed and logged in `docs/11-first-runtime-attempt.md`
-- current geth fallback left untouched
+After the stalled branch, treat the next mainnet retry as a clean rebuild:
+- keep the old failure notes, but do not reuse the stale mainnet snapshot/data paths
+- recreate the canonical paths from zero when the fresher snapshot is ready
+- validate the new snapshot before first startup
+- prove the local L1 multiplexer path first
+- then start `op-reth`, then `op-node`
+- do not call it healthy until decimal head movement and lag shrink are both visible
